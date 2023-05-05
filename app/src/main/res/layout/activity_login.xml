@@ -78,6 +78,6 @@
         android:layout_width="387dp"
         android:layout_height="72dp"
         android:background="@null"
-        android:src="@drawable/forgot" />
+        android:src="@drawable/forgot1" />
 
 </LinearLayout>
