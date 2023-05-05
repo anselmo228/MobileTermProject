@@ -51,6 +51,7 @@
 
     <!-- 다음 버튼 -->
     <Button
+        android:id = "@+id/send"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -60,14 +61,22 @@
         android:textColor="@color/white"
         android:textStyle="bold"
         android:text="로그인 하기"/>
-    <View
+    <Button
+        android:id = "@+id/visit"
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_border_2"
+        android:textColor="@color/red_400"
+        android:textStyle="bold"
+        android:text="가천대학교 홈페이지 방문하기"/>
 
     <ImageButton
         android:id="@+id/forgot"
-        android:layout_width="199dp"
-        android:layout_height="32dp"
+        android:layout_width="387dp"
+        android:layout_height="72dp"
         android:background="@null"
         android:src="@drawable/forgot" />
 

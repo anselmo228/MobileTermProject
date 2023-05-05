@@ -54,7 +54,7 @@
             android:background="@drawable/button_border_2"
             android:textColor="@color/red_400"
             android:textStyle="bold"
-            android:text="회원가입"/>
+            android:text="비회원으로 시작히기"/>
     </LinearLayout>
 
 </LinearLayout>
