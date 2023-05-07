@@ -34,6 +34,7 @@
         android:layout_marginEnd="15dp"
         android:background="@drawable/edit_text_border"
         android:hint="@string/email_hint"
+        android:padding="5dp"
         android:inputType="textEmailAddress"/>
     <View
         android:layout_width="match_parent"
@@ -47,6 +48,7 @@
         android:layout_marginEnd="15dp"
         android:background="@drawable/edit_text_border"
         android:hint="@string/password_hint"
+        android:padding="5dp"
         android:inputType="textPassword"/>
 
     <!-- 다음 버튼 -->
@@ -73,11 +75,15 @@
         android:textStyle="bold"
         android:text="가천대학교 홈페이지 방문하기"/>
 
-    <ImageButton
-        android:id="@+id/forgot"
-        android:layout_width="387dp"
-        android:layout_height="72dp"
-        android:background="@null"
-        android:src="@drawable/forgot1" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/loginInfo"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:textColor="@color/black"
+        android:textSize="13dp"
+        android:textStyle="bold"/>
 
 </LinearLayout>
