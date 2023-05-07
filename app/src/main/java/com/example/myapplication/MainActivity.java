@@ -30,13 +30,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // 회원가입 버튼 클릭 시 액션 추가
-        signupButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(intent);
-            }
-        });
     }
 }
