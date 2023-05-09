@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".MainpageActivity">
+    <!--식당 리스트 버튼-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_id_textview"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"/>
+<!--    뒤로가기 버튼-->
+    <ImageButton
+        android:id="@+id/image_back"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:src="@drawable/small_image"
+        android:background="@null" />
+<!--식당 이름, 별점-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textSize="30dp"
+            android:textColor="@color/black"
+            android:text="학생 생활관 식당"
+            android:textStyle="bold"/>
+
+        <RatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rating"
+            android:numStars="5"
+            android:rating="3"
+            android:stepSize="0.1"
+            style="@style/Widget.AppCompat.RatingBar.Indicator"
+            android:progressTint="@color/star_yellow"/>
+
+    </LinearLayout>
+<!--    식당위치, 지도 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="식당 위치: 제3 학생생활관"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"/>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="18dp"
+            android:id="@+id/map"
+            android:text="위치보기"
+            android:textSize="10dp"
+            android:textColor="@color/deep_orange_A700"
+            android:background="@drawable/button_border_2"
+            android:layout_gravity="right"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="16dp"
+            android:padding="2dp"/>
+    </LinearLayout>
+<!--식당 사진-->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/std_rest"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"/>
+
+<!--건의, 인스타 방문 버튼-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_suggest"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border_2"
+            android:textColor="@color/red_400"
+            android:textStyle="bold"
+            android:text="건의하기"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"/>
+
+        <Button
+            android:id="@+id/btn_insta"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_border"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:text="인스타그램 방문"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"/>
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/today"
+        android:text="오늘의 식단"
+        android:textColor="@color/deep_orange_A700"
+        android:background="@drawable/button_border_2"
+        android:textStyle="bold"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/week"
+        android:text="이번주 식단"
+        android:textColor="@color/deep_orange_A700"
+        android:background="@drawable/button_border_2"
+        android:textStyle="bold"/>
+
+</LinearLayout>

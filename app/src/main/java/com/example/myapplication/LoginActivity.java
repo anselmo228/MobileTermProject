@@ -21,11 +21,11 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText emailEditText, passwordEditText;
+    private EditText idEditText, passwordEditText;
     ImageButton imageButton;
     Button sendButton,
             visitButton;
-    String email,
+    String id,
             password,
             urlString;
 
@@ -43,18 +43,18 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        emailEditText = findViewById(R.id.email_edittext);
+        idEditText = findViewById(R.id.id_edittext);
         passwordEditText = findViewById(R.id.password_edittext);
 
         sendButton = findViewById(R.id.send);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                email = emailEditText.getText().toString();
+                id = idEditText.getText().toString();
                 password = passwordEditText.getText().toString();
 
                 urlString = "https://mobile.gach0n.com/get_session.php?id=" +
-                        URLEncoder.encode(email) + "&pw=" + URLEncoder.encode(password);
+                        URLEncoder.encode(id) + "&pw=" + URLEncoder.encode(password);
                 new NetworkTask().execute(urlString);
             }
         });
@@ -108,11 +108,11 @@ public class LoginActivity extends AppCompatActivity {
 
             if (responseText != null) {
                 if (!responseText.isEmpty()) {
-                    // 로그인 성공 responseText가 너무 길게 나와서 토스트 메시지에서 일단 지워뒀습니다.
-                    Toast.makeText(LoginActivity.this, " 환영합니다", Toast.LENGTH_SHORT).show();
+                    // 로그인 성공
+                    Toast.makeText(LoginActivity.this, id+" 환영합니다", Toast.LENGTH_SHORT).show();
                     // MainpageActivity로 이동
                     Intent mainPage = new Intent(LoginActivity.this, MainpageActivity.class);
-                    mainPage.putExtra("id", email);
+                    mainPage.putExtra("id", id);
                     mainPage.putExtra("password", password);
                     mainPage.putExtra("responseText", responseText);
                     startActivity(mainPage);
