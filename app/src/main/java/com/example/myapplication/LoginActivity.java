@@ -46,8 +46,8 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                String urlString = "https://mobile.gach0n.com/get_session.php?id=" + URLEncoder.encode(email) + "&pw=" + URLEncoder.encode(password);
-
+                String urlString = "https://mobile.gach0n.com/login.php?id=" +
+                        URLEncoder.encode(email) + "&pw=" + URLEncoder.encode(password);
 
                 new NetworkTask().execute(urlString);
             }
@@ -101,12 +101,9 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginActivity", "Response Text: " + responseText);
 
             if (responseText != null) {
-                if (responseText == "incorrect") {
-                    // 로그인 실패
-                    Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
-                } else {
+                if (!responseText.isEmpty()) {
                     // 로그인 성공
-                    Toast.makeText(LoginActivity.this, "로그인에 성공하였습니다. 환영합니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, responseText + " 환영합니다", Toast.LENGTH_SHORT).show();
                     //++++++++ 추가해주세요 MainpageActivity로 이동++++++++
                     //Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
                     //intent.putExtra("id", email);
@@ -116,10 +113,13 @@ public class LoginActivity extends AppCompatActivity {
 
                     // LoginActivity 종료
                     //finish();
+                } else {
+                    // 로그인 실패
+                    Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 // 예외 발생 시 처리할 코드 작성
-                Toast.makeText(LoginActivity.this, "Network ERROR", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
             }
         }
 

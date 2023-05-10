@@ -6,11 +6,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button loginButton;
-    private Button signupButton;
+    private Button guestButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 레이아웃 파일에서 버튼을 찾음
         loginButton = findViewById(R.id.btn_login);
-        signupButton = findViewById(R.id.btn_signup);
+        guestButton = findViewById(R.id.btn_guest);
 
         // 로그인 버튼 클릭 시 액션 추가
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -27,6 +28,22 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
+            }
+        });
+        guestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String id = "guest";
+                String password = null;
+                String responseText = null;
+
+                Toast.makeText(MainActivity.this, id+" 환영합니다", Toast.LENGTH_SHORT).show();
+                // MainpageActivity로 이동
+                Intent mainPage = new Intent(MainActivity.this, MainpageActivity.class);
+                mainPage.putExtra("id", id);
+                mainPage.putExtra("password", password);
+                mainPage.putExtra("responseText", responseText);
+                startActivity(mainPage);
             }
         });
 

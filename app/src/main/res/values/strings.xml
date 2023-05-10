@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">My Application</string>
-    <string name="email_hint">example@gmail.com</string>
-    <string name="password_hint">*******</string>
-    <string name="id">myID</string>
+    <string name="email_hint">아이디</string>
+    <string name="password_hint">비밀번호</string>
+    <string name="loginInfo">가천대학교 포털 사이트의 아이디와 비밀번호로 로그인 가능합니다.
+    아이디나 비밀번호를 잊어버렸을 경우, 가천대 홈페이지에서 아이디/비밀번호 찾기를 진행해 주시기 바랍니다.</string>
+    <string name="recInfo">추천 메뉴는 매주 학생들의 리뷰를 종합하여 합산됩니다.
+        리뷰 시스템에 대한 자세한 내용은 여기를 클릭해 주세요.</string>
 </resources>
