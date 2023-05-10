@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +12,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,6 +65,7 @@ public class MainpageActivity extends AppCompatActivity {
                 new NetworkTask().execute(urlString);
             }
         });
+
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {

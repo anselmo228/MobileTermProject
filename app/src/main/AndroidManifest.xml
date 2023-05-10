@@ -17,6 +17,9 @@
             android:name=".StuRestActivity"
             android:exported="false" />
         <activity
+            android:name=".RequestActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainpageActivity"
             android:exported="false" />
         <activity android:name=".LoginActivity" />

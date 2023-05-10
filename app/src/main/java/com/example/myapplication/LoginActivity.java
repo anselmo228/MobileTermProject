@@ -36,7 +36,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        emailEditText = findViewById(R.id.email_edittext);
+        emailEditText = findViewById(R.id.id_edittext);
         passwordEditText = findViewById(R.id.password_edittext);
 
         Button sendButton = findViewById(R.id.send);
@@ -46,10 +46,12 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
-                String urlString = "https://mobile.gach0n.com/login.php?id=" +
+                String urlString = "https://mobile.gach0n.com/get_session.php?id=" +
                         URLEncoder.encode(email) + "&pw=" + URLEncoder.encode(password);
 
-                new NetworkTask().execute(urlString);
+
+                new NetworkTask(email, password).execute(urlString);
+
             }
         });
 
@@ -67,6 +69,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {
+
+        private String email;
+        private String password;
+
+        public NetworkTask(String email, String password) {
+            this.email = email;
+            this.password = password;
+        }
+
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -101,27 +112,29 @@ public class LoginActivity extends AppCompatActivity {
             Log.d("LoginActivity", "Response Text: " + responseText);
 
             if (responseText != null) {
-                if (!responseText.isEmpty()) {
+                if (!responseText.trim().equalsIgnoreCase("incorrect")) {
                     // 로그인 성공
-                    Toast.makeText(LoginActivity.this, responseText + " 환영합니다", Toast.LENGTH_SHORT).show();
-                    //++++++++ 추가해주세요 MainpageActivity로 이동++++++++
-                    //Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
-                    //intent.putExtra("id", email);
-                    //intent.putExtra("password", password);
-                    //intent.putExtra("responseText", responseText);
-                    //startActivity(intent);
+                    Toast.makeText(LoginActivity.this, "로그인 성공. 환영합니다", Toast.LENGTH_SHORT).show();
 
+                    Intent intent = new Intent(LoginActivity.this, MainpageActivity.class);
+                    intent.putExtra("id", email);
+                    intent.putExtra("password", password);
+                    intent.putExtra("responseText", responseText);
+                    startActivity(intent);
                     // LoginActivity 종료
-                    //finish();
+                    finish();
                 } else {
                     // 로그인 실패
                     Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+
                 }
             } else {
                 // 예외 발생 시 처리할 코드 작성
                 Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
             }
         }
+
+
 
     }
 }
