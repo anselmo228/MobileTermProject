@@ -64,5 +64,27 @@ public class StuRestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Button todayButton = findViewById(R.id.today);
+        todayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(StuRestActivity.this, TodaysmenuActivity.class);
+                intent.putExtra("id", id);
+                intent.putExtra("password", password);
+                intent.putExtra("responseText", responseText);
+                startActivity(intent);
+            }
+        });
+        Button btn_insta = findViewById(R.id.btn_insta);
+        btn_insta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://www.gachon.ac.kr/kor/7350/subview.do";
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
+
     }
 }
