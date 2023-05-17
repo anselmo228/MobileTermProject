@@ -48,11 +48,18 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String inputText = idEditText.getText().toString();
-                Toast.makeText(RequestActivity.this, "정상적으로 처리되었습니다. 소중한 의견 감사합니다.", Toast.LENGTH_SHORT).show();
+                if(id == "guest"){
+                    Toast.makeText(RequestActivity.this, "비회원으로는 리뷰를 남길 수 없습니다. 로그인 후 진행해주세요" , Toast.LENGTH_SHORT).show();
+                    onBackPressed();
+                    finish();
+                }
+                else {
+                    String inputText = idEditText.getText().toString();
+                    Toast.makeText(RequestActivity.this, "정상적으로 처리되었습니다. 소중한 의견 감사합니다.", Toast.LENGTH_SHORT).show();
 
-                onBackPressed();
-                finish();
+                    onBackPressed();
+                    finish();
+                }
             }
         });
     }

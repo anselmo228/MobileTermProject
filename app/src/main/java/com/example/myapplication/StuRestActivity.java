@@ -21,14 +21,13 @@ public class StuRestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stu_rest);
-        // LoginActivity에서 전달받은 세션 정보
+        // MainPage 전달받은 세션 정보
         info = getIntent();
         id = info.getStringExtra("id");
         password = info.getStringExtra("password");
         responseText = info.getStringExtra("responseText");
 
-        // 세션 정보를 사용하는 코드 작성
-        // 예: TextView에 사용자 ID 표시
+        // 세션 정보를 상단에 출력
         userIdTextView = findViewById(R.id.user_id_textview);
         userIdTextView.setText("ID: " + id);
 

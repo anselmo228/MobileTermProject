@@ -112,11 +112,13 @@ public class MainpageActivity extends AppCompatActivity {
                 } else{
                     //세션 만료
                     Toast.makeText(MainpageActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
+                    new LoginActivity();
                     finish();
                 }
             } else{
                 //예외 발생시 처리할 코드
                 Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                new LoginActivity();
                 finish();
             }
         }

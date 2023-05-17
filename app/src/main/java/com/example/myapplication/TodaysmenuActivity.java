@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -17,6 +18,8 @@ public class TodaysmenuActivity extends AppCompatActivity {
     private String password;
     private String responseText;
 
+    TextView userIdTextView;
+
     ImageButton back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,11 @@ public class TodaysmenuActivity extends AppCompatActivity {
             id = intent.getStringExtra("id");
             password = intent.getStringExtra("password");
             responseText = intent.getStringExtra("responseText");
+
+            // 세션 정보를 사용하는 코드 작성
+            // 예: TextView에 사용자 ID 표시
+            userIdTextView = findViewById(R.id.user_id_textview);
+            userIdTextView.setText("ID: " + id);
         }
 
         back = findViewById(R.id.image_back);
