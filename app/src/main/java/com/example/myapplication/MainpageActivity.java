@@ -25,7 +25,7 @@ public class MainpageActivity extends AppCompatActivity {
     String id, password, responseText, identify;
     TextView userIdTextView;
     ImageButton back;
-    Button stu;
+    Button stu, vision, art, edu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,35 @@ public class MainpageActivity extends AppCompatActivity {
             }
         });
 
+        //비전타워 식당 버튼
+        vision = findViewById(R.id.vision);
+        vision.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainpageActivity.this, visionActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //예술인 레스토랑 버튼
+        art = findViewById(R.id.art);
+        art.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainpageActivity.this, artActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //교육대 식당 버튼
+        edu = findViewById(R.id.edu);
+        edu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainpageActivity.this, eduActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {

@@ -13,14 +13,14 @@
         android:id="@+id/user_id_textview"
         android:layout_marginTop="3dp"
         android:layout_marginLeft="3dp"/>
-<!--    뒤로가기 버튼-->
+    <!--    뒤로가기 버튼-->
     <ImageButton
         android:id="@+id/image_back"
         android:layout_width="53dp"
         android:layout_height="53dp"
         android:src="@drawable/small_image"
         android:background="@null" />
-<!--식당 이름, 별점-->
+    <!--식당 이름, 별점-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,10 +30,10 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginStart="0dp"
-            android:src="@drawable/sturest" />
+            android:src="@drawable/art_title" />
 
     </LinearLayout>
-<!--    식당위치, 지도 버튼-->
+    <!--    식당위치, 지도 버튼-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
             android:layout_height="30dp"
             android:layout_gravity="right"
             android:layout_marginRight="10dp"
-            android:text="식당 위치: 제3기숙사" />
+            android:text="식당 위치: 예술대학1층" />
 
         <Button
             android:id="@+id/map"
@@ -75,18 +75,18 @@
             android:textSize="10dp" />
 
     </LinearLayout>
-<!--식당 사진-->
+    <!--식당 사진-->
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:src="@drawable/std_rest"
+        android:src="@drawable/art_img1"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"/>
 
-<!--건의, 인스타 방문 버튼-->
+    <!--건의, 인스타 방문 버튼-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,13 +141,11 @@
         android:textColor="@color/deep_orange_A700"
         android:background="@drawable/button_border_2"
         android:textStyle="bold"/>
-
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:src="@drawable/descrip3" />
 </LinearLayout>

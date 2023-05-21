@@ -21,6 +21,15 @@
             android:name=".StuRestActivity"
             android:exported="false" />
         <activity
+            android:name=".artActivity"
+            android:exported="false" />
+        <activity
+            android:name=".eduActivity"
+            android:exported="false" />
+        <activity
+            android:name=".visionActivity"
+            android:exported="false" />
+        <activity
             android:name=".RequestActivity"
             android:exported="false" />
         <activity
