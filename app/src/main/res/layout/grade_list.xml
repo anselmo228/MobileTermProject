@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/grade_layout"
+    android:orientation="horizontal"
+    android:layout_marginLeft="10dp">
+<!--    음식 이름, 별점, 식사 여부-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/name"
+        android:textSize="25dp"/>
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/star"
+        style="@style/Widget.AppCompat.RatingBar.Indicator"
+        android:numStars="5"
+        android:progressTint="@color/star_yellow"
+        android:rating="0"
+        android:stepSize="1"/>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/check"/>
+
+</LinearLayout>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReviewActivity">
+    <!--id, 뒤로가기 버튼-->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_id_textview"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="3dp"/>
+    <ImageButton
+        android:id="@+id/image_back"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:src="@drawable/small_image"
+        android:background="@null" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/grade"
+        tools:listitem="@layout/grade_list"/>
+
+</LinearLayout>

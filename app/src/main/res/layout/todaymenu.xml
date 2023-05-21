@@ -42,12 +42,14 @@
         android:orientation="vertical"
         android:gravity="center">
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="373dp"
-            android:layout_height="490dp"
-            android:layout_marginTop="10dp"
-         />
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewPager"
+                android:layout_width="373dp"
+                android:layout_height="490dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                />
 
         <Button
             android:id="@+id/review"

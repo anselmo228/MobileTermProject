@@ -1,8 +1,5 @@
 package com.example.myapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -25,7 +22,7 @@ import java.net.URLEncoder;
 
 public class MainpageActivity extends AppCompatActivity {
     Intent info;
-    String id, password, responseText;
+    String id, password, responseText, identify;
     TextView userIdTextView;
     ImageButton back;
     Button stu;
@@ -60,6 +57,7 @@ public class MainpageActivity extends AppCompatActivity {
         stu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                identify = "st";
                 String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
                         + URLEncoder.encode(responseText);
                 new NetworkTask().execute(urlString);
@@ -103,12 +101,34 @@ public class MainpageActivity extends AppCompatActivity {
 
             if(response != "wrong session"){
                 if(response != "session expired"){
-                    Intent stuRest = new Intent(MainpageActivity.this, StuRestActivity.class);
-                    stuRest.putExtra("id", id);
-                    stuRest.putExtra("password", password);
-                    //response 메시지가 아니라 session을 넘겨줬습니다
-                    stuRest.putExtra("responseText", responseText);
-                    startActivity(stuRest);
+                    
+                    switch(identify){
+                        case "st":
+                            Intent rest = new Intent(MainpageActivity.this, StuRestActivity.class);
+                            rest.putExtra("id", id);
+                            rest.putExtra("password", password);
+                            //response 메시지가 아니라 session을 넘겨줬습니다
+                            rest.putExtra("responseText", responseText);
+                            rest.putExtra("identify", identify);//0:기숙사 1:교육대 2:체육대 3:비전
+                            startActivity(rest);
+                            break;
+                        case "ed":
+                            //교육대 식당
+                            break;
+                        case "pe":
+                            //체육대 식당
+                            break;
+                        case "vi":
+                            //비전타워 식당
+                            break;
+                        default:
+                            Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                            new LoginActivity();
+                            finish();
+                            break;
+                    }
+
+
                 } else{
                     //세션 만료
                     Toast.makeText(MainpageActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
