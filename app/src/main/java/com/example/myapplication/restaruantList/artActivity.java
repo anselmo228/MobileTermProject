@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.restaruantList;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -8,13 +8,15 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class visionActivity extends AppCompatActivity {
+import com.example.myapplication.R;
+
+public class artActivity extends AppCompatActivity {
     private Button mapButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vision);
+        setContentView(R.layout.activity_art);
 
         mapButton = findViewById(R.id.map);
         mapButton.setOnClickListener(new View.OnClickListener() {

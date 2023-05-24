@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.pages;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,6 +15,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.myapplication.MyFragment;
+import com.example.myapplication.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

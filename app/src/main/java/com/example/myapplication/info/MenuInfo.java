@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.info;
 
 //각 메뉴의 이름과 영양정보의 틀을 제공합니다.
 public class MenuInfo {

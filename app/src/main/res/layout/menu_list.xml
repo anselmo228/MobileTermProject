@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/linearLayout"
-    android:layout_marginLeft="10dp">
+    android:layout_marginLeft="16dp"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/foodName"
-        android:textSize="40dp" />
+        android:text="음식 이름"
+        android:textSize="40dp"
+        android:textColor="@color/red_400"/>
 
     <LinearLayout
         android:id="@+id/nut"
@@ -23,28 +25,32 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="칼로리: "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/red_400"/>
 
         <TextView
             android:id="@+id/pro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="단백질: "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/red_400"/>
 
         <TextView
             android:id="@+id/car"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="탄수화물: "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/red_400"/>
 
         <TextView
             android:id="@+id/fat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="지방: "
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:textColor="@color/red_400"/>
 
     </LinearLayout>
 

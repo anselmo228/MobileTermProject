@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.adapter;
 
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -7,6 +7,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.info.MenuInfo;
+import com.example.myapplication.OnViewHolderItemClickListener;
+import com.example.myapplication.R;
+import com.example.myapplication.ViewHolderMenu;
 
 import java.util.ArrayList;
 

@@ -14,30 +14,30 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
-            android:name=".ReviewActivity"
+            android:name=".pages.ReviewActivity"
             android:exported="false" />
-        <activity android:name=".TodaysmenuActivity" />
+        <activity android:name=".pages.TodaysmenuActivity" />
         <activity
-            android:name=".StuRestActivity"
-            android:exported="false" />
-        <activity
-            android:name=".artActivity"
+            android:name=".restaruantList.StuRestActivity"
             android:exported="false" />
         <activity
-            android:name=".eduActivity"
+            android:name=".restaruantList.artActivity"
             android:exported="false" />
         <activity
-            android:name=".visionActivity"
+            android:name=".restaruantList.eduActivity"
             android:exported="false" />
         <activity
-            android:name=".RequestActivity"
+            android:name=".restaruantList.visionActivity"
             android:exported="false" />
         <activity
-            android:name=".MainpageActivity"
+            android:name=".pages.RequestActivity"
             android:exported="false" />
-        <activity android:name=".LoginActivity" />
         <activity
-            android:name=".MainActivity"
+            android:name=".pages.MainpageActivity"
+            android:exported="false" />
+        <activity android:name=".pages.LoginActivity" />
+        <activity
+            android:name=".pages.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

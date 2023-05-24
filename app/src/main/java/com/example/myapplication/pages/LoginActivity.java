@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.pages;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,8 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;

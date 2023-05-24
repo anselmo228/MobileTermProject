@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.pages;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.R;
+import com.example.myapplication.restaruantList.StuRestActivity;
+import com.example.myapplication.restaruantList.artActivity;
+import com.example.myapplication.restaruantList.eduActivity;
+import com.example.myapplication.restaruantList.visionActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -58,9 +64,7 @@ public class MainpageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 identify = "st";
-                String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
-                        + URLEncoder.encode(responseText);
-                new NetworkTask().execute(urlString);
+                startNetworkTask();
             }
         });
 
@@ -69,8 +73,8 @@ public class MainpageActivity extends AppCompatActivity {
         vision.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainpageActivity.this, visionActivity.class);
-                startActivity(intent);
+                identify = "vi";
+                startNetworkTask();
             }
         });
 
@@ -79,8 +83,8 @@ public class MainpageActivity extends AppCompatActivity {
         art.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainpageActivity.this, artActivity.class);
-                startActivity(intent);
+                identify = "ar";
+                startNetworkTask();
             }
         });
 
@@ -89,10 +93,11 @@ public class MainpageActivity extends AppCompatActivity {
         edu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainpageActivity.this, eduActivity.class);
-                startActivity(intent);
+                identify = "ed";
+                startNetworkTask();
             }
         });
+
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {
@@ -124,52 +129,70 @@ public class MainpageActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String response){
+        protected void onPostExecute(String response) {
             //responseText 출력
-            Log.d("MainpageActivity", "Response Text: "+response);
-
-            if(response != "wrong session"){
-                if(response != "session expired"){
-                    
-                    switch(identify){
-                        case "st":
-                            Intent rest = new Intent(MainpageActivity.this, StuRestActivity.class);
-                            rest.putExtra("id", id);
-                            rest.putExtra("password", password);
-                            //response 메시지가 아니라 session을 넘겨줬습니다
-                            rest.putExtra("responseText", responseText);
-                            rest.putExtra("identify", identify);//0:기숙사 1:교육대 2:체육대 3:비전
-                            startActivity(rest);
-                            break;
-                        case "ed":
-                            //교육대 식당
-                            break;
-                        case "pe":
-                            //체육대 식당
-                            break;
-                        case "vi":
-                            //비전타워 식당
-                            break;
-                        default:
-                            Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
-                            new LoginActivity();
-                            finish();
-                            break;
-                    }
-
-
-                } else{
+            Log.d("MainpageActivity", "Response Text: " + response);
+            //session이 정상일 때 각 식당으로 넘어갑니다.
+            if (response != "wrong session") {
+                if (response != "session expired") {
+                    enterTodaysmenu();
+                } else {
                     //세션 만료
                     Toast.makeText(MainpageActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
                     new LoginActivity();
                     finish();
                 }
-            } else{
+            } else {
                 //예외 발생시 처리할 코드
                 Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
                 new LoginActivity();
                 finish();
             }
         }
+
+    }
+
+    //기존에서 다음 activity로 넘어가는 부분을 따로 함수로 만들었습니다.
+    private void enterTodaysmenu() {
+        Intent intent = new Intent();
+        switch (identify) {
+            case "st":
+                //학생생활관 식당
+                intent = new Intent(MainpageActivity.this, StuRestActivity.class);
+                break;
+            case "ed":
+                //교육대 식당
+                intent = new Intent(MainpageActivity.this, eduActivity.class);
+                break;
+            case "ar":
+                //예술대 식당
+                intent = new Intent(MainpageActivity.this, artActivity.class);
+                break;
+            case "vi":
+                //비전타워 식당
+                intent = new Intent(MainpageActivity.this, visionActivity.class);
+                break;
+            default:
+                //비정상적인 입력시 로그인페이지 반환
+                Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                new LoginActivity();
+                finish();
+                break;
+        }
+        intent.putExtra("id", id);
+        intent.putExtra("password", password);
+        //response 메시지가 아니라 session을 넘겨줬습니다
+        intent.putExtra("responseText", responseText);
+        intent.putExtra("identify", identify);//st:기숙사 ed:교육대 pe:체육대 vi:비전
+        startActivity(intent);
+    }
+    //NetworkTask를 시작합니다.
+    private void startNetworkTask(){
+        if (id.equals("guest")) {
+            enterTodaysmenu();
+        }
+        String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                + URLEncoder.encode(responseText);
+        new NetworkTask().execute(urlString);
     }
 }

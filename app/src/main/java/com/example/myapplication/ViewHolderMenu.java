@@ -9,7 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-//선언한 MenuInfo를 펼치고 접을 수 있는 텍스트뷰로 만들어줍니다.
+import com.example.myapplication.info.MenuInfo;
+
+//선언한 MenuInfo를 펼치고 접을 수 있는 뷰로 만들어줍니다.
 public class ViewHolderMenu extends RecyclerView.ViewHolder{
     TextView name;
     TextView cal;

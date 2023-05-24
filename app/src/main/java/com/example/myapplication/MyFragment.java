@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.myapplication.adapter.MenuListAdapter;
+import com.example.myapplication.info.MenuInfo;
 
 import java.util.ArrayList;
 
@@ -61,10 +64,10 @@ public class MyFragment extends Fragment {
             ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
 
             RecyclerView menuList = rootView.findViewById(R.id.nut_lun);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(rootView.getContext(),
-                    3, GridLayoutManager.VERTICAL, false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
+                    LinearLayoutManager.VERTICAL, false);
             MenuListAdapter adapter = new MenuListAdapter(items);
-            menuList.setLayoutManager(gridLayoutManager);
+            menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
             //메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
@@ -92,7 +95,6 @@ public class MyFragment extends Fragment {
                     "car:200",
                     "pro:300",
                     "fat:400"));
-
         } else {//저녁
             // 두 번째 페이지에 대응하는 UI를 구성
             rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
@@ -102,10 +104,10 @@ public class MyFragment extends Fragment {
             ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
 
             RecyclerView menuList = rootView.findViewById(R.id.nut_din);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(rootView.getContext(),
-                    3, GridLayoutManager.VERTICAL, false);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
+                    LinearLayoutManager.VERTICAL, false);
             MenuListAdapter adapter = new MenuListAdapter(items);
-            menuList.setLayoutManager(gridLayoutManager);
+            menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
             //메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));

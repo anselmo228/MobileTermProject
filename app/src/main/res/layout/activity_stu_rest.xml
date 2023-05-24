@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".MainpageActivity">
+    tools:context=".pages.MainpageActivity">
     <!--식당 리스트 버튼-->
     <TextView
         android:layout_width="wrap_content"

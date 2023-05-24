@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.restaruantList;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,6 +12,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.pages.LoginActivity;
+import com.example.myapplication.R;
+import com.example.myapplication.pages.RequestActivity;
+import com.example.myapplication.pages.TodaysmenuActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainpageActivity">
+    tools:context=".pages.MainpageActivity">
     <!--id와 뒤로가기 버튼-->
     <TextView
         android:layout_width="wrap_content"
