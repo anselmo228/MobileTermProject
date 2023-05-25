@@ -188,11 +188,17 @@ public class MainpageActivity extends AppCompatActivity {
     }
     //NetworkTask를 시작합니다.
     private void startNetworkTask(){
-        if (id.equals("guest")) {
+        if (id != null && id.equals("guest")) {
             enterTodaysmenu();
+        } else {
+
+            if(responseText != null) {
+                String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                        + URLEncoder.encode(responseText);
+                new NetworkTask().execute(urlString);
+            } else {
+                Toast.makeText(MainpageActivity.this, "Responsetext가 null입니다", Toast.LENGTH_SHORT).show();
+            }
         }
-        String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
-                + URLEncoder.encode(responseText);
-        new NetworkTask().execute(urlString);
     }
 }

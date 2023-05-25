@@ -133,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             } else {
                 // 예외 발생 시 처리할 코드 작성
-                Toast.makeText(LoginActivity.this, "아이디/비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "네트워크 오류", Toast.LENGTH_SHORT).show();
             }
         }
 

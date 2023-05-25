@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.pages.LoginActivity;
 import com.example.myapplication.R;
+import com.example.myapplication.pages.MainpageActivity;
 import com.example.myapplication.pages.RequestActivity;
 import com.example.myapplication.pages.TodaysmenuActivity;
 
@@ -83,9 +84,20 @@ public class StuRestActivity extends AppCompatActivity {
         todayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
-                        + URLEncoder.encode(responseText);
-                new NetworkTask().execute(urlString);
+                if (id != null && id.equals("guest")) {
+                    Intent today = new Intent(StuRestActivity.this, TodaysmenuActivity.class);
+                    today.putExtra("id", id);
+                    startActivity(today);
+                } else {
+
+                    if(responseText != null) {
+                        String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                                + URLEncoder.encode(responseText);
+                        new NetworkTask().execute(urlString);
+                    } else {
+                        Toast.makeText(StuRestActivity.this, "Responsetext가 null입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
         Button btn_insta = findViewById(R.id.btn_insta);

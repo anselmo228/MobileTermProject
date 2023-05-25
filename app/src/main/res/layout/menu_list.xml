@@ -10,9 +10,10 @@
         android:id="@+id/foodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/jalnan"
         android:text="음식 이름"
-        android:textSize="40dp"
-        android:textColor="@color/red_400"/>
+        android:textColor="@color/black"
+        android:textSize="30dp" />
 
     <LinearLayout
         android:id="@+id/nut"
@@ -26,6 +27,7 @@
             android:layout_height="wrap_content"
             android:text="칼로리: "
             android:textSize="20dp"
+            android:textStyle="bold"
             android:textColor="@color/red_400"/>
 
         <TextView
@@ -34,7 +36,9 @@
             android:layout_height="wrap_content"
             android:text="단백질: "
             android:textSize="20dp"
-            android:textColor="@color/red_400"/>
+            android:textStyle="bold"
+            android:textColor="@color/deep_orange_A700"
+           />
 
         <TextView
             android:id="@+id/car"
@@ -42,7 +46,8 @@
             android:layout_height="wrap_content"
             android:text="탄수화물: "
             android:textSize="20dp"
-            android:textColor="@color/red_400"/>
+            android:textStyle="bold"
+            android:textColor="@color/pink_900"/>
 
         <TextView
             android:id="@+id/fat"
@@ -50,7 +55,8 @@
             android:layout_height="wrap_content"
             android:text="지방: "
             android:textSize="20dp"
-            android:textColor="@color/red_400"/>
+            android:textStyle="bold"
+            android:textColor="@color/black_900"/>
 
     </LinearLayout>
 

@@ -1,5 +1,6 @@
 package com.example.myapplication.pages;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -18,6 +20,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.example.myapplication.MyFragment;
 import com.example.myapplication.R;
+import com.example.myapplication.restaruantList.StuRestActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -82,11 +85,39 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
         review.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
-                        + URLEncoder.encode(responseText);
-                new NetworkTask().execute(urlString);
+                if (id != null && id.equals("guest")) {
+                    // Create an AlertDialog.Builder object
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TodaysmenuActivity.this);
+                    builder.setMessage("비회원은 리뷰를 남길 수 없습니다. 로그인 하시겠습니까?")
+                            .setCancelable(false)
+                            .setPositiveButton("로그인하기", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Perform action on click
+                                    Intent loginIntent = new Intent(TodaysmenuActivity.this, LoginActivity.class);
+                                    startActivity(loginIntent);
+                                }
+                            })
+                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // Cancel the dialog
+                                    dialog.cancel();
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                } else {
+                    if(responseText != null) {
+                        String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                                + URLEncoder.encode(responseText);
+                        new NetworkTask().execute(urlString);
+                    } else {
+                        Toast.makeText(TodaysmenuActivity.this, "Responsetext가 null입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
             }
         });
+
     }
 
     public static class PagerAdapter extends FragmentStatePagerAdapter {

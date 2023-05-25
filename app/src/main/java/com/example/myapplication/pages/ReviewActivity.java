@@ -1,6 +1,7 @@
 package com.example.myapplication.pages;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,13 @@ import com.example.myapplication.R;
 import com.example.myapplication.adapter.GradeListAdapter;
 import com.example.myapplication.info.ReviewInfo;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 public class ReviewActivity extends AppCompatActivity implements GradeListAdapter.OnRecordEventListener {
@@ -46,6 +54,8 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             identify = intent.getStringExtra("identify");
             time = intent.getStringExtra("time");
 
+            imageButton = findViewById(R.id.image_back);
+
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,22 +81,72 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    finish();
+                    String urlString = null;
+                    try {
+                        urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                                + URLEncoder.encode(responseText, "UTF-8");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    new SessionCheckTask().execute(urlString);
                 }
             });
-        }else{
-            Toast.makeText(this,"error: no intent",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "error: no intent", Toast.LENGTH_SHORT).show();
             finish();
         }
     }
 
     @Override
     public void onRatingBarChange(ReviewInfo item, float value, int position) {
-        //save your object into database here
-        if (item.getRatingBar() != null) { // RatingBar 객체가 null이 아닌 경우에만 처리
+        if (item.getRatingBar() != null) {
             String name = item.getName();
-            float point = value; // 평점 가져오기
+            float point = value;
             text.setText(name + ": " + point);
+        }
+    }
+
+    private class SessionCheckTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoOutput(false);
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder responseBuilder = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseBuilder.append(line);
+                    }
+                    return responseBuilder.toString();
+                }
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            if ("wrong session".equals(response)) {
+                Toast.makeText(ReviewActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else if ("session expired".equals(response)) {
+                Toast.makeText(ReviewActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
+                startActivity(intent);
+            } else {
+                Toast.makeText(ReviewActivity.this, "소중한 의견 감사합니다", Toast.LENGTH_LONG).show();
+                finish();
+            }
         }
     }
 }

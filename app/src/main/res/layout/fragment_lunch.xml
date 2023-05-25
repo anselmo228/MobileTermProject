@@ -4,7 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textStyle="bold"
+        android:id="@+id/lunchview"
+        android:textSize="17dp"
+        android:text="오늘의 점심메뉴."
+        android:textColor="@color/black"
+        android:fontFamily="@font/jalnan"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

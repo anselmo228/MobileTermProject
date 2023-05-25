@@ -96,6 +96,7 @@
             android:id="@+id/btn_suggest"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:fontFamily="@font/jalnan"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border_2"
             android:textColor="@color/red_400"
@@ -113,6 +114,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:text="인스타그램 방문"
+            android:fontFamily="@font/jalnan"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"/>
 
@@ -127,6 +129,7 @@
         android:id="@+id/today"
         android:text="오늘의 식단"
         android:textColor="@color/deep_orange_A700"
+        android:fontFamily="@font/jalnan"
         android:background="@drawable/button_border_2"
         android:textStyle="bold"/>
 
@@ -138,8 +141,9 @@
         android:layout_marginTop="10dp"
         android:id="@+id/week"
         android:text="이번주 식단"
-        android:textColor="@color/deep_orange_A700"
-        android:background="@drawable/button_border_2"
+        android:fontFamily="@font/jalnan"
+        android:background="@drawable/button_border"
+        android:textColor="@color/white"
         android:textStyle="bold"/>
     <ImageView
         android:layout_width="match_parent"
