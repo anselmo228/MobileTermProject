@@ -59,7 +59,7 @@
             android:textColor="@color/white"
             android:fontFamily="@font/jalnan"
             android:textStyle="bold"
-            android:text="로그인"
+            android:text="가천대 포털 로그인"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"/>
 
