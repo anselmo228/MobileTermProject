@@ -14,7 +14,7 @@
         android:textStyle="bold"
         android:id="@+id/lunchview"
         android:textSize="17dp"
-        android:text="오늘의 점심500메뉴."
+        android:text="오늘의 점심600메뉴."
         android:textColor="@color/black"
         android:fontFamily="@font/jalnan"/>
     <View
@@ -23,7 +23,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/nut_lun"
+        android:id="@+id/nut_lun600"
         tools:listitem="@layout/menu_list"/>
 
 

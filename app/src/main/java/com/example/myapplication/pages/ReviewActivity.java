@@ -40,6 +40,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
     private Button accept;
     private ImageButton imageButton;
     TextView text;
+    private String menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             responseText = intent.getStringExtra("responseText");
             identify = intent.getStringExtra("identify");
             time = intent.getStringExtra("time");
+            menu = intent.getStringExtra("menu");
 
             imageButton = findViewById(R.id.image_back);
 
@@ -63,11 +65,12 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                 }
             });
 
+            // 이 부분이 "menu" 문자열을 쉼표를 기준으로 잘라서 ArrayList에 넣는 코드입니다.
+            String[] menuItems = menu.split(",");
             items = new ArrayList<>();
-            items.add(new ReviewInfo("식사1", this));
-            items.add(new ReviewInfo("식사2", this));
-            items.add(new ReviewInfo("식사3", this));
-            items.add(new ReviewInfo("식사4", this));
+            for (String menuItem : menuItems) {
+                items.add(new ReviewInfo(menuItem.trim(), this));
+            }
 
             text = findViewById(R.id.text);
 
@@ -96,6 +99,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             finish();
         }
     }
+
 
     @Override
     public void onRatingBarChange(ReviewInfo item, float value, int position) {

@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,14 +19,14 @@ import java.util.ArrayList;
 
 public class MyFragment extends Fragment {
 
-    public interface Listener{
+    public interface Listener {
         void onReceived(int channel);
     }
+
     private Listener listener;
     private static final String ARG_POSITION = "position";
     private int position;
 
-    //점심과 저녁 중 어느 화면을 보는지를 액티비티에 보내려고 만들었습니다.
     public static MyFragment newInstance(int position) {
         MyFragment fragment = new MyFragment();
         Bundle args = new Bundle();
@@ -35,16 +34,17 @@ public class MyFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
-    public void onAttach(Context context){
+    public void onAttach(Context context) {
         super.onAttach(context);
-        if(getActivity() != null && getActivity() instanceof Listener){
+        if (getActivity() != null && getActivity() instanceof Listener) {
             listener = (Listener) getActivity();
         }
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             position = getArguments().getInt(ARG_POSITION);
@@ -54,11 +54,8 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView;
-        //점심
         if (position == 0) {
-            // 첫 번째 페이지에 대응하는 UI를 구성
             rootView = inflater.inflate(R.layout.fragment_lunch, container, false);
-            // 첫 번째 페이지에 필요한 UI 요소들을 rootView에서 찾아서 처리
             // ...
 
             ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
@@ -70,7 +67,7 @@ public class MyFragment extends Fragment {
             menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
-            //메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
             items.add(new MenuInfo(
                     "lunch",
                     "cal:100",
@@ -95,10 +92,46 @@ public class MyFragment extends Fragment {
                     "car:200",
                     "pro:300",
                     "fat:400"));
-        } else {//저녁
-            // 두 번째 페이지에 대응하는 UI를 구성
+        } else if (position == 1) {
+            rootView = inflater.inflate(R.layout.fragment_lunch600, container, false);
+            // ...
+
+            ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
+
+            RecyclerView menuList = rootView.findViewById(R.id.nut_lun600);
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
+                    LinearLayoutManager.VERTICAL, false);
+            MenuListAdapter adapter = new MenuListAdapter(items);
+            menuList.setLayoutManager(linearLayoutManager);
+            menuList.setAdapter(adapter);
+
+            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            items.add(new MenuInfo(
+                    "lunch600",
+                    "cal:100",
+                    "car:200",
+                    "pro:300",
+                    "fat:400"));
+            items.add(new MenuInfo(
+                    "lunch600-2",
+                    "cal:100",
+                    "car:200",
+                    "pro:300",
+                    "fat:400"));
+            items.add(new MenuInfo(
+                    "lunch600-3",
+                    "cal:100",
+                    "car:200",
+                    "pro:300",
+                    "fat:400"));
+            items.add(new MenuInfo(
+                    "lunch600-4",
+                    "cal:100",
+                    "car:200",
+                    "pro:300",
+                    "fat:400"));
+        } else {
             rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
-            // 두 번째 페이지에 필요한 UI 요소들을 rootView에서 찾아서 처리
             // ...
 
             ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
@@ -110,46 +143,44 @@ public class MyFragment extends Fragment {
             menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
-            //메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
             items.add(new MenuInfo(
-                    "food",
+                    "dinner",
                     "cal:100",
                     "car:200",
                     "pro:300",
-                    "fat:400"
-            ));
+                    "fat:400"));
             items.add(new MenuInfo(
-                    "food2",
+                    "dinner2",
                     "cal:100",
                     "car:200",
                     "pro:300",
-                    "fat:400"
-            ));
+                    "fat:400"));
             items.add(new MenuInfo(
-                    "food3",
+                    "dinner3",
                     "cal:100",
                     "car:200",
                     "pro:300",
-                    "fat:400"
-            ));
+                    "fat:400"));
             items.add(new MenuInfo(
-                    "food4",
+                    "dinner4",
                     "cal:100",
                     "car:200",
                     "pro:300",
-                    "fat:400"
-            ));
+                    "fat:400"));
         }
+
         return rootView;
     }
+
     @Override
-    public void setUserVisibleHint(boolean isVisible){
-        if(isVisible){//점심: 1 >> 0, 저녁: 0 >> 1
-            Log.d("MyFragment", "if, "+position);
-        }else{
-            Log.d("MyFragment", "else, "+position);
+    public void setUserVisibleHint(boolean isVisible) {
+        if (isVisible) { // 점심: 1 >> 0, 저녁: 0 >> 1
+            Log.d("MyFragment", "if, " + position);
+        } else {
+            Log.d("MyFragment", "else, " + position);
         }
-        if(listener != null) listener.onReceived(position);
+        if (listener != null) listener.onReceived(position);
         super.setUserVisibleHint(isVisible);
     }
 }
