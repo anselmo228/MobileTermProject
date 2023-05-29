@@ -30,6 +30,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+
 
 public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.Listener {
     private ViewPager viewPager;
@@ -39,13 +43,21 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
     private String responseText;
     private String identify;
     private Button review;
-    private int position;
+    private int position = 0;
     private TextView userIdTextView;
     private ImageButton back;
 
+    private String menuResult;
+
+
+
     public void onReceived(int num) {
-        position = num;
+        if (position != num) {  // Only perform a new request if position changed
+            position = num;
+            requestMenu();
+        }
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,22 +111,42 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
                     AlertDialog alert = builder.create();
                     alert.show();
                 } else {
-                    String mld;
-                    if (position == 0) {
-                        mld = "lunch500";
-                    } else if (position == 1) {
-                        mld = "lunch600";
-                    } else {
-                        mld = "dinner";
-                    }
-                    new ReviewNetworkTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
-                            + URLEncoder.encode(responseText) + "&date=2023-05-23&mld=" + mld);
+
+                    // Create and start intent for ReviewActivity here
+                    Intent reviewIntent = new Intent(TodaysmenuActivity.this, ReviewActivity.class);
+                    reviewIntent.putExtra("id", id);
+                    reviewIntent.putExtra("password", password);
+                    reviewIntent.putExtra("responseText", responseText);
+                    reviewIntent.putExtra("identify", identify);
+                    reviewIntent.putExtra("time", position);
+                    reviewIntent.putExtra("menu", menuResult);
+                    startActivity(reviewIntent);
                 }
             }
         });
 
+        // Initial menu request
+        requestMenu();
+
     }
 
+    private void requestMenu() {
+        String mld;
+        if (position == 0) {
+            mld = "lunch500";
+        } else if (position == 1) {
+            mld = "lunch600";
+        } else {
+            mld = "dinner";
+        }
+
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        new ReviewNetworkTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
+                + URLEncoder.encode(responseText) + "&date=2023-05-23&mld=" + mld);
+    }
     private class PagerAdapter extends FragmentStatePagerAdapter {
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -170,68 +202,65 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
                 finish();
             } else {
                 Log.d("TodaysmenuActivity", "Retrieved menu: " + result);
-
+                menuResult = result;
                 // Split result by ,
                 String[] menuItems = result.split(",");
 
+                /*여기에 메뉴들 들어가져 있습니다*/
                 ArrayList<String> menus = new ArrayList<>();
                 for (String menuItem : menuItems) {
                     menus.add(menuItem.trim());
-                    new MenuRequestTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
+                    new MenuRequestTask().execute("https://mobile.gach0n.com/get_nutrient.php?session_id="
                             + URLEncoder.encode(responseText) + "&menu=" + URLEncoder.encode(menuItem.trim()));
+
                     Log.d("TodaysmenuActivity", "Menu requested:" + menuItem.trim());
                 }
-
-                Intent reviewIntent = new Intent(TodaysmenuActivity.this, ReviewActivity.class);
-                reviewIntent.putExtra("id", id);
-                reviewIntent.putExtra("password", password);
-                reviewIntent.putExtra("responseText", responseText);
-                reviewIntent.putExtra("identify", identify);
-                reviewIntent.putExtra("time", position);
-                reviewIntent.putExtra("menu", result);
-                startActivity(reviewIntent);
             }
         }
-    }
 
-    private class MenuRequestTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
+        private ArrayList<String> menuNutrition = new ArrayList<>(); // 여기에 탄단지
 
-            try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        private class MenuRequestTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... urls) {
+                String response = "";
 
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String line = null;
-                    while ((line = br.readLine()) != null) {
-                        response += line;
+                try {
+                    URL url = new URL(urls[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            response += line;
+                        }
+                        br.close();
                     }
-                    br.close();
+                    conn.disconnect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                conn.disconnect();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+                return response;
             }
 
-            return response;
-        }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            if (result.equals("Response(False) : fail")) {
-                Log.d("TodaysmenuActivity", "Menu request failed ");
-            }
-            if(result.isEmpty()){
-                Log.d("TodaysmenuActivity", "Menu request is empty.");
-            }else {
-                Log.d("TodaysmenuActivity", "Menu request result: " + result);
+                if (result.equals("Response(False) : fail")) {
+                    Log.d("TodaysmenuActivity", "Menu request failed ");
+                    menuNutrition.add("1인분<br>kcal:0<br>fat:0<br>carbohydrate:0<br>protein:0<br>"); // 일단 디폴트 값 넣기
+                } else if (result.isEmpty()) {
+                    Log.d("TodaysmenuActivity", "Menu request is empty.");
+                } else {
+                    // Save the response in the ArrayList
+                    menuNutrition.add(result);
+                    Log.d("TodaysmenuActivity", "Menu request result: " + result);
+                }
             }
         }
     }

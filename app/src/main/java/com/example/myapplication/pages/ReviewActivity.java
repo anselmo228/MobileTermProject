@@ -3,6 +3,7 @@ package com.example.myapplication.pages;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -26,6 +27,11 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ReviewActivity extends AppCompatActivity implements GradeListAdapter.OnRecordEventListener {
 
@@ -39,13 +45,16 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
     private RatingBar star;
     private Button accept;
     private ImageButton imageButton;
-    TextView text;
+    private TextView text;
     private String menu;
+    private HashMap<String, Float> ratingMap;  // 메뉴 이름과 별점을 저장하는 HashMap
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
+
+        ratingMap = new HashMap<>();  // HashMap 초기화
 
         Intent intent = getIntent();
         if (intent != null) {
@@ -57,7 +66,6 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             menu = intent.getStringExtra("menu");
 
             imageButton = findViewById(R.id.image_back);
-
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +73,6 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                 }
             });
 
-            // 이 부분이 "menu" 문자열을 쉼표를 기준으로 잘라서 ArrayList에 넣는 코드입니다.
             String[] menuItems = menu.split(",");
             items = new ArrayList<>();
             for (String menuItem : menuItems) {
@@ -84,14 +91,36 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             accept.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String urlString = null;
-                    try {
-                        urlString = "https://mobile.gach0n.com/check_session.php?session_id="
-                                + URLEncoder.encode(responseText, "UTF-8");
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    for (Map.Entry<String, Float> entry : ratingMap.entrySet()) {
+                        String name = entry.getKey();
+                        Float point = entry.getValue();
+                        String urlString = null;
+                        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                        String currentDate = dateFormat.format(calendar.getTime());
+
+                        if (time == "0") {
+                            time = "lunch500";
+                        } else if (time == "1") {
+                            time = "lunch600";
+                        } else {
+                            time = "dinner";
+                        }
+
+                        try {
+                            urlString = "https://mobile.gach0n.com/send_star.php?session_id="
+                                    + URLEncoder.encode(responseText, "UTF-8")
+                                    + "&date=2023-05-23"
+                                    + "&mld=" + time
+                                    + "&menu=" + URLEncoder.encode(name, "UTF-8")
+                                    + "&star=" + point.toString();
+                            Log.d("ReviewActivity", "Rating time:" + time);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        new SendRatingTask().execute(urlString);
                     }
-                    new SessionCheckTask().execute(urlString);
+                    Toast.makeText(ReviewActivity.this, "소중한 의견 감사합니다", Toast.LENGTH_LONG).show();
                 }
             });
         } else {
@@ -100,17 +129,15 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
         }
     }
 
-
     @Override
     public void onRatingBarChange(ReviewInfo item, float value, int position) {
-        if (item.getRatingBar() != null) {
-            String name = item.getName();
-            float point = value;
-            text.setText(name + ": " + point);
-        }
+        String name = item.getName();
+        float point = value;
+        text.setText(name + ": " + point);
+        ratingMap.put(name, point);  // 별점을 HashMap에 저장
     }
 
-    private class SessionCheckTask extends AsyncTask<String, Void, String> {
+    private class SendRatingTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
             try {
@@ -139,18 +166,18 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
 
         @Override
         protected void onPostExecute(String response) {
-            if ("wrong session".equals(response)) {
+            if (response != null && response.startsWith("success")) {
+                finish();
+            } else if (response != null && response.startsWith("fail")) {
                 Toast.makeText(ReviewActivity.this, "에러", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
                 startActivity(intent);
-            } else if ("session expired".equals(response)) {
+            } else {
                 Toast.makeText(ReviewActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
                 startActivity(intent);
-            } else {
-                Toast.makeText(ReviewActivity.this, "소중한 의견 감사합니다", Toast.LENGTH_LONG).show();
-                finish();
             }
+            Log.d("ReviewActivity", "Rating Result:" + response);
         }
     }
 }
