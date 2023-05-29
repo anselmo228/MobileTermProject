@@ -31,7 +31,7 @@ public class MainpageActivity extends AppCompatActivity {
     String id, password, responseText, identify;
     TextView userIdTextView;
     ImageButton back;
-    Button stu, vision, art, edu;
+    Button stu, vision, art, edu, recommend;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +98,14 @@ public class MainpageActivity extends AppCompatActivity {
             }
         });
 
+        recommend = findViewById(R.id.recommend);
+        recommend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                identify = "rec";
+                startNetworkTask();
+            }
+        });
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {
@@ -135,7 +143,7 @@ public class MainpageActivity extends AppCompatActivity {
             //session이 정상일 때 각 식당으로 넘어갑니다.
             if (response != "wrong session") {
                 if (response != "session expired") {
-                    enterTodaysmenu();
+                    nextActivity();
                 } else {
                     //세션 만료
                     Toast.makeText(MainpageActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
@@ -153,7 +161,7 @@ public class MainpageActivity extends AppCompatActivity {
     }
 
     //기존에서 다음 activity로 넘어가는 부분을 따로 함수로 만들었습니다.
-    private void enterTodaysmenu() {
+    private void nextActivity() {
         Intent intent = new Intent();
         switch (identify) {
             case "st":
@@ -172,6 +180,10 @@ public class MainpageActivity extends AppCompatActivity {
                 //비전타워 식당
                 intent = new Intent(MainpageActivity.this, visionActivity.class);
                 break;
+            case "rec":
+                //메뉴 추천 시스템
+                intent = new Intent(MainpageActivity.this, RecommendActivity.class);
+                break;
             default:
                 //비정상적인 입력시 로그인페이지 반환
                 Toast.makeText(MainpageActivity.this, "에러", Toast.LENGTH_SHORT).show();
@@ -189,7 +201,7 @@ public class MainpageActivity extends AppCompatActivity {
     //NetworkTask를 시작합니다.
     private void startNetworkTask(){
         if (id != null && id.equals("guest")) {
-            enterTodaysmenu();
+            nextActivity();
         } else {
 
             if(responseText != null) {

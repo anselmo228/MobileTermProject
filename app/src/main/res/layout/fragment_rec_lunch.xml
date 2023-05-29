@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:textStyle="bold"
+        android:id="@+id/lunchview"
+        android:textSize="17dp"
+        android:textColor="@color/black"
+        android:text="오늘의 점심메뉴 추천"
+        android:fontFamily="@font/jalnan"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/nut_lun"
+        tools:listitem="@layout/rec_list"/>
+
+</LinearLayout>

@@ -58,116 +58,116 @@ public class MyFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_lunch, container, false);
             // ...
 
-            ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
+            ArrayList<MenuInfo> lunch500List = new ArrayList<MenuInfo>();
 
             RecyclerView menuList = rootView.findViewById(R.id.nut_lun);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
                     LinearLayoutManager.VERTICAL, false);
-            MenuListAdapter adapter = new MenuListAdapter(items);
+            MenuListAdapter adapter = new MenuListAdapter(lunch500List);
             menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
-            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            items.add(new MenuInfo(
+            // 메뉴 입력: lunch500List.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            lunch500List.add(new MenuInfo(
                     "lunch",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch500List.add(new MenuInfo(
                     "lunch2",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch500List.add(new MenuInfo(
                     "lunch3",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch500List.add(new MenuInfo(
                     "lunch4",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
+                    100,
+                    200,
+                    300,
+                    400));
         } else if (position == 1) {
             rootView = inflater.inflate(R.layout.fragment_lunch600, container, false);
             // ...
 
-            ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
+            ArrayList<MenuInfo> lunch600List = new ArrayList<MenuInfo>();
 
             RecyclerView menuList = rootView.findViewById(R.id.nut_lun600);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
                     LinearLayoutManager.VERTICAL, false);
-            MenuListAdapter adapter = new MenuListAdapter(items);
+            MenuListAdapter adapter = new MenuListAdapter(lunch600List);
             menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
-            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            items.add(new MenuInfo(
+            // 메뉴 입력: lunch600List.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            lunch600List.add(new MenuInfo(
                     "lunch600",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch600List.add(new MenuInfo(
                     "lunch600-2",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch600List.add(new MenuInfo(
                     "lunch600-3",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            lunch600List.add(new MenuInfo(
                     "lunch600-4",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
+                    100,
+                    200,
+                    300,
+                    400));
         } else {
             rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
             // ...
 
-            ArrayList<MenuInfo> items = new ArrayList<MenuInfo>();
+            ArrayList<MenuInfo> dinnerList = new ArrayList<MenuInfo>();
 
             RecyclerView menuList = rootView.findViewById(R.id.nut_din);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
                     LinearLayoutManager.VERTICAL, false);
-            MenuListAdapter adapter = new MenuListAdapter(items);
+            MenuListAdapter adapter = new MenuListAdapter(dinnerList);
             menuList.setLayoutManager(linearLayoutManager);
             menuList.setAdapter(adapter);
 
-            // 메뉴 입력: items.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            items.add(new MenuInfo(
+            // 메뉴 입력: dinnerList.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
+            dinnerList.add(new MenuInfo(
                     "dinner",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            dinnerList.add(new MenuInfo(
                     "dinner2",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            dinnerList.add(new MenuInfo(
                     "dinner3",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
-            items.add(new MenuInfo(
+                    100,
+                    200,
+                    300,
+                    400));
+            dinnerList.add(new MenuInfo(
                     "dinner4",
-                    "cal:100",
-                    "car:200",
-                    "pro:300",
-                    "fat:400"));
+                    100,
+                    200,
+                    300,
+                    400));
         }
 
         return rootView;
@@ -175,10 +175,8 @@ public class MyFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisible) {
-        if (isVisible) { // 점심: 1 >> 0, 저녁: 0 >> 1
-            Log.d("MyFragment", "if, " + position);
-        } else {
-            Log.d("MyFragment", "else, " + position);
+        if (isVisible) { // 점심500:0, 점심600:1, 저녁:2
+            Log.d("MyFragment", "position: " + position);
         }
         if (listener != null) listener.onReceived(position);
         super.setUserVisibleHint(isVisible);

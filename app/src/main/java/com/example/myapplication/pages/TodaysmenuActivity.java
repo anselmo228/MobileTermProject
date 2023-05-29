@@ -43,7 +43,7 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
     private String responseText;
     private String identify;
     private Button review;
-    private int position = 0;
+    private int position = -1;
     private TextView userIdTextView;
     private ImageButton back;
 
