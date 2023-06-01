@@ -45,7 +45,6 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
     private RatingBar star;
     private Button accept;
     private ImageButton imageButton;
-    private TextView text;
     private String menu;
     private HashMap<String, Float> ratingMap;  // 메뉴 이름과 별점을 저장하는 HashMap
 
@@ -64,6 +63,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             identify = intent.getStringExtra("identify");
             time = intent.getStringExtra("time");
             menu = intent.getStringExtra("menu");
+            Log.d("ReviewActivity","time"+time);
 
             imageButton = findViewById(R.id.image_back);
             imageButton.setOnClickListener(new View.OnClickListener() {
@@ -78,8 +78,6 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
             for (String menuItem : menuItems) {
                 items.add(new ReviewInfo(menuItem.trim(), this));
             }
-
-            text = findViewById(R.id.text);
 
             RecyclerView recyclerView = findViewById(R.id.grade);
             adapter = new GradeListAdapter(items, this);
@@ -133,7 +131,6 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
     public void onRatingBarChange(ReviewInfo item, float value, int position) {
         String name = item.getName();
         float point = value;
-        text.setText(name + ": " + point);
         ratingMap.put(name, point);  // 별점을 HashMap에 저장
     }
 
@@ -177,7 +174,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                 Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-            Log.d("ReviewActivity", "Rating Result:" + response);
+            Log.d("ratingResult", "Rating Result:" + response);
         }
     }
 }
