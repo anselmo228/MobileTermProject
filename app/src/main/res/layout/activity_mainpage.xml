@@ -118,7 +118,7 @@
         android:scaleType="fitCenter"
         android:background="@drawable/button_border_2"
         android:textSize="25dp"
-        android:text="리뷰시스템 알아보기"
+        android:text="별점 기반 추천 시스템"
         android:fontFamily="@font/jalnan"
         android:textColor="@color/red_A700"/>
 

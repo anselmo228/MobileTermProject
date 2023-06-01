@@ -15,7 +15,9 @@
         android:id="@+id/lunchview"
         android:textSize="17dp"
         android:text="오늘의 점심600메뉴."
-        android:textColor="@color/black"
+        android:background="@drawable/button_border_2"
+        android:textColor="@color/pink_900"
+        android:padding="5dp"
         android:fontFamily="@font/jalnan"/>
     <View
         android:layout_width="match_parent"

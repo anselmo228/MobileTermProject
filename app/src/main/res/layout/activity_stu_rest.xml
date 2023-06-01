@@ -142,7 +142,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="10dp"
         android:id="@+id/week"
-        android:text="이번주 식단"
+        android:text="식단 미리보기"
         android:fontFamily="@font/jalnan"
         android:textColor="@color/white"
         android:background="@drawable/button_border"

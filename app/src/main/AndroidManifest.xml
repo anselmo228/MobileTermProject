@@ -39,6 +39,7 @@
             android:name=".pages.MainpageActivity"
             android:exported="false" />
         <activity android:name=".pages.LoginActivity" />
+        <activity android:name=".pages.tomorrowmenuActivity" />
         <activity
             android:name=".pages.MainActivity"
             android:exported="true">

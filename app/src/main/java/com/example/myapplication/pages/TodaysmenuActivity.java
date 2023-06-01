@@ -32,7 +32,6 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 
 
@@ -47,8 +46,10 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
     private int position = -1;
     private TextView userIdTextView;
     private ImageButton back;
+
     private String menuResult;
-    private HashMap<String, String> nutritionInfo = new HashMap<>();
+
+
 
     public void onReceived(int num) {
         if (position != num) {  // Only perform a new request if position changed
@@ -126,6 +127,7 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
 
         // Initial menu request
         requestMenu();
+
     }
 
     private void requestMenu() {
@@ -143,9 +145,8 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
         String currentDate = dateFormat.format(calendar.getTime());
 
         new ReviewNetworkTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
-                + URLEncoder.encode(responseText) + "&date=2023-05-23&mld=" + mld);
+                + URLEncoder.encode(responseText) + "&date="+currentDate+"&mld=" + mld);
     }
-
     private class PagerAdapter extends FragmentStatePagerAdapter {
         public PagerAdapter(FragmentManager fm) {
             super(fm);
@@ -202,66 +203,65 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
             } else {
                 Log.d("TodaysmenuActivity", "Retrieved menu: " + result);
                 menuResult = result;
+                // Split result by ,
                 String[] menuItems = result.split(",");
-                ArrayList<String> menus = new ArrayList<>();
 
+                /*여기에 메뉴들 들어가져 있습니다*/
+                ArrayList<String> menus = new ArrayList<>();
                 for (String menuItem : menuItems) {
                     menus.add(menuItem.trim());
-                    new MenuRequestTask(menuItem.trim()).execute("https://mobile.gach0n.com/get_nutrient.php?session_id="
+                    new MenuRequestTask().execute("https://mobile.gach0n.com/get_nutrient.php?session_id="
                             + URLEncoder.encode(responseText) + "&menu=" + URLEncoder.encode(menuItem.trim()));
+
                     Log.d("TodaysmenuActivity", "Menu requested:" + menuItem.trim());
                 }
             }
         }
-    }
 
-    private class MenuRequestTask extends AsyncTask<String, Void, String> {
-        private String menu;
+        private ArrayList<String> menuNutrition = new ArrayList<>(); // 여기에 탄단지
 
-        MenuRequestTask(String menu) {
-            this.menu = menu;
-        }
+        private class MenuRequestTask extends AsyncTask<String, Void, String> {
+            @Override
+            protected String doInBackground(String... urls) {
+                String response = "";
 
-        @Override
-        protected String doInBackground(String... urls) {
-            String response = "";
+                try {
+                    URL url = new URL(urls[0]);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            try {
-                URL url = new URL(urls[0]);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                    String line;
-                    while ((line = br.readLine()) != null) {
-                        response += line;
+                    if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String line;
+                        while ((line = br.readLine()) != null) {
+                            response += line;
+                        }
+                        br.close();
                     }
-                    br.close();
+                    conn.disconnect();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-                conn.disconnect();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+
+                return response;
             }
 
-            return response;
-        }
+            @Override
+            protected void onPostExecute(String result) {
+                super.onPostExecute(result);
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-//            if (result.equals("fail")) {
-//                Log.d("TodaysmenuActivity", "Menu request failed ");
-//                nutritionInfo.put(menu, "1n분<br>kcal:0<br>fat:0<br>carbohydrate:0<br>protein:0<br>");
-//            } else if (result.isEmpty()) {
-//                Log.d("TodaysmenuActivity", "Menu request is empty.");
-//            } else {
-//                // Save the response in the HashMap
-//                nutritionInfo.put(menu, result);
-//                Log.d("TodaysmenuActivity", "Menu request result: " + nutritionInfo);
-//            }
+                if (result.equals("Response(False) : fail")) {
+                    Log.d("TodaysmenuActivity", "Menu request failed ");
+                    menuNutrition.add("1인분<br>kcal:0<br>fat:0<br>carbohydrate:0<br>protein:0<br>"); // 일단 디폴트 값 넣기
+                } else if (result.isEmpty()) {
+                    Log.d("TodaysmenuActivity", "Menu request is empty.");
+                } else {
+                    // Save the response in the ArrayList
+                    menuNutrition.add(result);
+                    Log.d("TodaysmenuActivity", "Menu request result: " + result);
+                }
+            }
         }
     }
 }

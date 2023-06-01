@@ -47,6 +47,10 @@ public class MyFragment extends Fragment {
     private String menuResult;
     private HashMap<String, String> nutritionInfo = new HashMap<>();
     ArrayList<MenuInfo> lunch500List;
+    ArrayList<MenuInfo> lunch600List;
+    ArrayList<MenuInfo> dinnerList;
+
+
     RecyclerView lunch500, lunch600, dinner;
 
     public static MyFragment newInstance(int position) {
@@ -92,62 +96,41 @@ public class MyFragment extends Fragment {
             lunch500.setAdapter(adapter);
 
             // 메뉴 입력: lunch500List.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            lunch500List.add(new MenuInfo(
-                    "lunch", 100, 200, 300, 400));
-            lunch500List.add(new MenuInfo(
-                    "lunch2", 100, 200, 300, 400));
-            lunch500List.add(new MenuInfo(
-                    "lunch3", 100, 200, 300, 400));
-            lunch500List.add(new MenuInfo(
-                    "lunch4", 100, 200, 300, 400));
+
             requestMenu();
 
         } else if (position == 1) {
             rootView = inflater.inflate(R.layout.fragment_lunch600, container, false);
             // ...
 
-            ArrayList<MenuInfo> lunch600List = new ArrayList<MenuInfo>();
+           lunch600List = new ArrayList<MenuInfo>();
 
-            RecyclerView menuList = rootView.findViewById(R.id.nut_lun600);
+            lunch600 = rootView.findViewById(R.id.nut_lun600);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
                     LinearLayoutManager.VERTICAL, false);
             MenuListAdapter adapter = new MenuListAdapter(lunch600List);
-            menuList.setLayoutManager(linearLayoutManager);
-            menuList.setAdapter(adapter);
+            lunch600.setLayoutManager(linearLayoutManager);
+            lunch600.setAdapter(adapter);
 
             // 메뉴 입력: lunch600List.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            lunch600List.add(new MenuInfo(
-                    "lunch600", 100, 200, 300, 400));
-            lunch600List.add(new MenuInfo(
-                    "lunch600-2", 100, 200, 300, 400));
-            lunch600List.add(new MenuInfo(
-                    "lunch600-3", 100, 200, 300, 400));
-            lunch600List.add(new MenuInfo(
-                    "lunch600-4", 100, 200, 300, 400));
+
             requestMenu();
 
         } else {
             rootView = inflater.inflate(R.layout.fragment_dinner, container, false);
             // ...
 
-            ArrayList<MenuInfo> dinnerList = new ArrayList<MenuInfo>();
+            dinnerList = new ArrayList<MenuInfo>();
 
-            RecyclerView menuList = rootView.findViewById(R.id.nut_din);
+            dinner = rootView.findViewById(R.id.nut_din);
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(rootView.getContext(),
                     LinearLayoutManager.VERTICAL, false);
             MenuListAdapter adapter = new MenuListAdapter(dinnerList);
-            menuList.setLayoutManager(linearLayoutManager);
-            menuList.setAdapter(adapter);
+            dinner.setLayoutManager(linearLayoutManager);
+            dinner.setAdapter(adapter);
 
             // 메뉴 입력: dinnerList.add(new MenuInfo("이름","칼로리","탄수화물","단백질","지방"));
-            dinnerList.add(new MenuInfo(
-                    "dinner", 100, 200, 300, 400));
-            dinnerList.add(new MenuInfo(
-                    "dinner2", 100, 200, 300, 400));
-            dinnerList.add(new MenuInfo(
-                    "dinner3", 100, 200, 300, 400));
-            dinnerList.add(new MenuInfo(
-                    "dinner4", 100, 200, 300, 400));
+
             requestMenu();
         }
 
@@ -178,7 +161,7 @@ public class MyFragment extends Fragment {
         String currentDate = dateFormat.format(calendar.getTime());
 
         new MyFragment.ReviewNetworkTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
-                + URLEncoder.encode(responseText) + "&date=2023-05-23&mld=" + mld);
+                + URLEncoder.encode(responseText) + "&date="+currentDate+"&mld=" + mld);
     }
 
     private class PagerAdapter extends FragmentStatePagerAdapter {
@@ -298,24 +281,57 @@ public class MyFragment extends Fragment {
             }
             if(position == 0){
                 //lunch500
-                ArrayList<MenuInfo> list = new ArrayList<>();
-                list.add(new MenuInfo("onpost", 100, 200, 300, 400));
-                list.add(new MenuInfo("onpost2", 100, 200, 300, 400));
-                PutMenu(lunch500, list);
-                nutritionInfo.forEach((key, value)->{
-                    Log.d("put", position+" "+key+" "+value);
+                nutritionInfo.forEach((key, value) -> {
+                    String[] values = value.split("<br>");
+                    String kcal = values[1].substring(values[1].indexOf(':') + 1);
+                    String fat = values[2].substring(values[2].indexOf(':') + 1);
+                    String carbohydrate = values[3].substring(values[3].indexOf(':') + 1);
+                    String protein = values[4].substring(values[4].indexOf(':') + 1);
+
+                    MenuInfo newMenuInfo = new MenuInfo(key, Float.parseFloat(kcal), Float.parseFloat(fat), Float.parseFloat(carbohydrate), Float.parseFloat(protein));
+                    if (!lunch500List.contains(newMenuInfo)) {
+                        lunch500List.add(newMenuInfo);
+                    }
                 });
-            }else if(position == 1){
+
+                PutMenu(lunch500, lunch500List);
+                Log.d("total lunch 500 menu size", String.valueOf(lunch500List.size()));
+            } else if(position == 1){
                 //lunch600
-                nutritionInfo.forEach((key, value)->{
-                    Log.d("put", position+" key "+key+" value "+value);
+                nutritionInfo.forEach((key, value) -> {
+                    String[] values = value.split("<br>");
+                    String kcal = values[1].substring(values[1].indexOf(':') + 1);
+                    String fat = values[2].substring(values[2].indexOf(':') + 1);
+                    String carbohydrate = values[3].substring(values[3].indexOf(':') + 1);
+                    String protein = values[4].substring(values[4].indexOf(':') + 1);
+
+                    MenuInfo newMenuInfo = new MenuInfo(key, Float.parseFloat(kcal), Float.parseFloat(fat), Float.parseFloat(carbohydrate), Float.parseFloat(protein));
+                    if (!lunch600List.contains(newMenuInfo)) {
+                        lunch600List.add(newMenuInfo);
+                    }
                 });
-            } else{
+
+                PutMenu(lunch600, lunch600List);
+                Log.d("total lunch 600 menu size", String.valueOf(lunch600List.size()));
+            } else {
                 //dinner
-                nutritionInfo.forEach((key, value)->{
-                    Log.d("put", position+" key "+key+" value "+value);
+                nutritionInfo.forEach((key, value) -> {
+                    String[] values = value.split("<br>");
+                    String kcal = values[1].substring(values[1].indexOf(':') + 1);
+                    String fat = values[2].substring(values[2].indexOf(':') + 1);
+                    String carbohydrate = values[3].substring(values[3].indexOf(':') + 1);
+                    String protein = values[4].substring(values[4].indexOf(':') + 1);
+
+                    MenuInfo newMenuInfo = new MenuInfo(key, Float.parseFloat(kcal), Float.parseFloat(protein), Float.parseFloat(carbohydrate), Float.parseFloat(fat));
+                    if (!dinnerList.contains(newMenuInfo)) {
+                        dinnerList.add(newMenuInfo);
+                    }
                 });
+
+                PutMenu(dinner, dinnerList);
+                Log.d("total dinner menu size", String.valueOf(nutritionInfo.size()));
             }
+
         }
     }
     private void PutMenu(RecyclerView recyclerView, ArrayList<MenuInfo> list){

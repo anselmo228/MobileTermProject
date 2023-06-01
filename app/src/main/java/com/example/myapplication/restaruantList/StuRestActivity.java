@@ -18,6 +18,7 @@ import com.example.myapplication.R;
 import com.example.myapplication.pages.MainpageActivity;
 import com.example.myapplication.pages.RequestActivity;
 import com.example.myapplication.pages.TodaysmenuActivity;
+import com.example.myapplication.pages.tomorrowmenuActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -100,6 +101,27 @@ public class StuRestActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Button tomorrowButton = findViewById(R.id.week);
+        tomorrowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (id != null && id.equals("guest")) {
+                    Intent tomorrow = new Intent(StuRestActivity.this, tomorrowmenuActivity.class);
+                    tomorrow.putExtra("id", id);
+                    startActivity(tomorrow);
+                } else {
+                    if(responseText != null) {
+                        String urlString = "https://mobile.gach0n.com/check_session.php?session_id="
+                                + URLEncoder.encode(responseText);
+                        new TomorrowNetworkTask().execute(urlString);
+                    } else {
+                        Toast.makeText(StuRestActivity.this, "Responsetext가 null입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+
         Button btn_insta = findViewById(R.id.btn_insta);
         btn_insta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,4 +188,57 @@ public class StuRestActivity extends AppCompatActivity {
             }
         }
     }
+
+    private class TomorrowNetworkTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoOutput(false);
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder responseBuilder = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseBuilder.append(line);
+                    }
+                    return responseBuilder.toString();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+            Log.d("MainpageActivity", "Response Text: " + response);
+
+            if (response != "wrong session") {
+                if (response != "session expired") {
+                    Intent tomorrow = new Intent(StuRestActivity.this, tomorrowmenuActivity.class);
+                    tomorrow.putExtra("id", id);
+                    tomorrow.putExtra("password", password);
+                    tomorrow.putExtra("responseText", responseText);
+                    startActivity(tomorrow);
+                } else {
+                    Toast.makeText(StuRestActivity.this, "세션이 만료되었습니다.", Toast.LENGTH_SHORT).show();
+                    new LoginActivity();
+                    finish();
+                }
+            } else {
+                Toast.makeText(StuRestActivity.this, "에러", Toast.LENGTH_SHORT).show();
+                new LoginActivity();
+                finish();
+            }
+        }
+    }
+
 }

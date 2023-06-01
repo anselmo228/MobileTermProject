@@ -6,15 +6,18 @@
     android:orientation="vertical">
     <View
         android:layout_width="match_parent"
-        android:layout_height="10dp" />
+        android:layout_height="10dp"
+     />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:textStyle="bold"
         android:id="@+id/lunchview"
+        android:background="@drawable/button_border_2"
+        android:textColor="@color/pink_900"
+        android:padding="5dp"
         android:textSize="17dp"
-        android:textColor="@color/black"
         android:text="오늘의 저녁메뉴."
         android:fontFamily="@font/jalnan"/>
     <View
