@@ -103,6 +103,7 @@ public class MainpageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 identify = "rec";
+
                 startNetworkTask();
             }
         });

@@ -116,7 +116,7 @@
             android:textColor="@color/white"
             android:textStyle="bold"
             android:fontFamily="@font/jalnan"
-            android:text="인스타그램 방문"
+            android:text="인스타그램"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="16dp"/>
 

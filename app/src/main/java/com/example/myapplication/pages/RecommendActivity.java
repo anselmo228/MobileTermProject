@@ -1,47 +1,53 @@
 package com.example.myapplication.pages;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.myapplication.MyFragment;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
-import com.example.myapplication.RecFragment;
 
-public class RecommendActivity extends AppCompatActivity implements RecFragment.Listener {
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
+public class RecommendActivity extends AppCompatActivity {
     private TextView userIdTextView;
     private ImageButton back;
     private String id;
-    private int position = 0;
+    private String responseText;
 
-    @Override
-    public void onReceived(int num) {
-        if(position != num){
-            position = num;
-            requestRec();
-        }
-    }
+    private RatingBar ratingBarLunch500;
+    private RatingBar ratingBarLunch600;
+    private RatingBar ratingBarDinner;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommend);
 
+        ratingBarLunch500 = findViewById(R.id.rating_lunch500);
+        ratingBarLunch600 = findViewById(R.id.rating_lunch600);
+        ratingBarDinner = findViewById(R.id.rating_dinner);
+
         Intent intent = getIntent();
         if(intent !=null){
             id = intent.getStringExtra("id");
+            responseText = intent.getStringExtra("responseText");
+
             userIdTextView = findViewById(R.id.user_id_textview);
             userIdTextView.setText("ID: "+id);
         }
@@ -49,36 +55,70 @@ public class RecommendActivity extends AppCompatActivity implements RecFragment.
         back = findViewById(R.id.image_back);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {onBackPressed();}
+            public void onClick(View view) {
+                onBackPressed();
+            }
         });
 
-        viewPager = findViewById(R.id.viewPager);
-        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-
-        requestRec();
+        // send a request to the server
+        requestData("lunch500", ratingBarLunch500);
+        requestData("lunch600", ratingBarLunch600);
+        requestData("dinner", ratingBarDinner);
     }
-    private void requestRec(){
-        String mld;
-        if (position == 0) {
-            mld = "lunch";
-        }else{
-            mld = "dinner";
+
+    private void requestData(String mealType, RatingBar ratingBar) {
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        if (responseText != null) {
+            String urlString = "https://mobile.gach0n.com/mld_rate.php?session_id="
+                    + responseText + "&date="+currentDate +"&mld=" + mealType;
+            new NetworkTask(ratingBar).execute(urlString);
+        } else {
+            Toast.makeText(RecommendActivity.this, "Response text is null", Toast.LENGTH_SHORT).show();
         }
     }
-    private class PagerAdapter extends FragmentStatePagerAdapter {
-        public PagerAdapter(FragmentManager fm) {
-            super(fm);
+
+    private class NetworkTask extends AsyncTask<String, Void, String> {
+        private RatingBar ratingBar;
+
+        public NetworkTask(RatingBar ratingBar) {
+            this.ratingBar = ratingBar;
         }
 
         @Override
-        public Fragment getItem(int position) {
-            return RecFragment.newInstance(position);
+        protected String doInBackground(String... urls) {
+            try {
+                URL url = new URL(urls[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoOutput(false);
+
+                int responseCode = connection.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder responseBuilder = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseBuilder.append(line);
+                    }
+                    return responseBuilder.toString();
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
-        public int getCount() {
-            return 2;
+        protected void onPostExecute(String response) {
+            if (response != null && !"NAN".equalsIgnoreCase(response)) {
+                ratingBar.setRating(Float.parseFloat(response));
+            } else {
+                ratingBar.setRating(0.0f);
+            }
         }
     }
 }

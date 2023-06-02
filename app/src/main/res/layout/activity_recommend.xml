@@ -47,20 +47,329 @@
         android:gravity="center">
 
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewPager"
-            android:layout_width="373dp"
-            android:layout_height="490dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="550dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/stdrest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:background="@drawable/button_border_2"
+                    android:fontFamily="@font/jalnan"
+                    android:padding="5dp"
+                    android:text="학생 생활관 식당."
+                    android:textColor="@color/red_401"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 500]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+                    android:id="@+id/rating_lunch500"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="3"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 600]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+                    android:id="@+id/rating_lunch600"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="3"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[저녁]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+                    android:id="@+id/rating_dinner"
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="3"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_border_2"
+                    android:fontFamily="@font/jalnan"
+                    android:padding="5dp"
+                    android:text="비전타워 식당"
+                    android:textColor="@color/red_600"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 500]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="3.5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 600]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="1.7"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[저녁]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="4.2"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_border_2"
+                    android:fontFamily="@font/jalnan"
+                    android:padding="5dp"
+                    android:text="예술 체육대학 식당"
+                    android:textColor="@color/pink_900"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 500]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="5"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 600]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="2"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[저녁]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="4"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/button_border_2"
+                    android:fontFamily="@font/jalnan"
+                    android:padding="5dp"
+                    android:text="교육대학원 식당"
+                    android:textColor="@color/red_601"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 500]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="3"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[점심 600]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="4"
+                    android:stepSize="0.1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/jalnan"
+                    android:text="[저녁]"
+                    android:textColor="@color/black_900"
+                    android:textSize="17dp" />
+
+                <RatingBar
+
+                    style="@style/Widget.AppCompat.RatingBar.Indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:numStars="5"
+                    android:progressTint="@color/star_yellow"
+                    android:rating="2.4"
+                    android:stepSize="0.1" />
+            </LinearLayout>
+
+        </ScrollView>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:id="@+id/lunchview"
             android:textSize="15dp"
-            android:text="별점 기록을 기준으로 추천합니다."
+            android:text="오늘의 별점 기록을 기준으로 추천합니다."
             android:fontFamily="@font/jalnan"/>
 
     </LinearLayout>
