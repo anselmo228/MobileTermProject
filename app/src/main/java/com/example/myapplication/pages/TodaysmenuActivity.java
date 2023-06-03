@@ -144,6 +144,7 @@ public class TodaysmenuActivity extends AppCompatActivity implements MyFragment.
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String currentDate = dateFormat.format(calendar.getTime());
 
+
         new ReviewNetworkTask().execute("https://mobile.gach0n.com/get_meal.php?session_id="
                 + URLEncoder.encode(responseText) + "&date="+currentDate+"&mld=" + mld);
     }

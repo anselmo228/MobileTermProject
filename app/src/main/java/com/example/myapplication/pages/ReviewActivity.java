@@ -97,6 +97,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
                         String currentDate = dateFormat.format(calendar.getTime());
 
+
                         if (time == "0") {
                             time = "lunch500";
                         } else if (time == "1") {
@@ -119,6 +120,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                         new SendRatingTask().execute(urlString);
                     }
                     Toast.makeText(ReviewActivity.this, "소중한 의견 감사합니다", Toast.LENGTH_LONG).show();
+                    finish();
                 }
             });
         } else {
@@ -174,7 +176,7 @@ public class ReviewActivity extends AppCompatActivity implements GradeListAdapte
                 Intent intent = new Intent(ReviewActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
-            Log.d("ratingResult", "Rating Result:" + response);
+            Log.d("ratingResult", "Rating R        String currentDate = \"2023-05-23\";\nesult:" + response);
         }
     }
 }

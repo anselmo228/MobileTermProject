@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,12 +28,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class StuRestActivity extends AppCompatActivity {
     Intent info;
     String id, password, responseText;
     TextView userIdTextView;
-
+    RatingBar rating;
     ImageButton back;
     Button btn_suggest;
 
@@ -131,6 +135,16 @@ public class StuRestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        Calendar calendar = Calendar.getInstance(Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentDate = dateFormat.format(calendar.getTime());
+
+        rating = findViewById(R.id.rating);
+        String urlString = "https://mobile.gach0n.com/mld_rate.php?session_id="
+                + URLEncoder.encode(responseText)
+                +"&data="+URLEncoder.encode(currentDate);
+        new RatingNetworkTask().execute(urlString);
     }
 
     private class NetworkTask extends AsyncTask<String, Void, String> {
@@ -238,6 +252,44 @@ public class StuRestActivity extends AppCompatActivity {
                 new LoginActivity();
                 finish();
             }
+        }
+    }
+    private class RatingNetworkTask extends AsyncTask<String,Void,String>{
+        @Override
+        protected String doInBackground(String... urls){
+            String response = "";
+
+            try{
+                URL url = new URL(urls[0]);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                if(conn.getResponseCode() == HttpURLConnection.HTTP_OK){
+                    BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                    String line = null;
+                    while ((line = br.readLine()) != null){
+                        response += line;
+                    }
+                    br.close();
+                }
+                conn.disconnect();
+            } catch(MalformedURLException e){
+                e.printStackTrace();
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+            return response;
+        }
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+            float ratingNumber;
+            Log.d("Rating", "result: "+result);
+            if(result.equals("NAN")){
+                ratingNumber = (float)3.5;
+            }else{
+                ratingNumber = Float.parseFloat(result);
+            }
+            rating.setRating(ratingNumber);
+            Log.d("Rating", "today's rating: "+rating);
         }
     }
 
